@@ -261,7 +261,12 @@
 
     async function loadStatus() {
       try {
-        const res = await fetch("status.json?t=" + Date.now());
+        let res;
+        try {
+          res = await fetch("https://raw.githubusercontent.com/LukasVitek67/strata-remote/main/status.json?t=" + Date.now(), { cache: "no-store" });
+        } catch(e) {
+          res = await fetch("status.json?t=" + Date.now(), { cache: "no-store" });
+        }
         const data = await res.json();
         targetUrl = data.url;
         document.getElementById("directBtn").href = targetUrl;
