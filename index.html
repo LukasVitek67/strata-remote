@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Strata AI · Remote Gateway</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/LukasVitek67/strata-remote/main/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0f172a">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --card-border: #1e293b;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-glow: rgba(16, 185, 129, 0.2);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --blue: #38bdf8;
+      --purple: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.9); }
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    p.sub {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .redirect-card {
+      background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
+      border: 1px solid #312e81;
+      border-radius: 18px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .progress-bar-wrap {
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 14px 0 16px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 1.5s linear;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #022c22;
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      margin-top: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+    }
+    .row:last-child { border-bottom: none; }
+    .val {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 600;
+      color: var(--blue);
+      user-select: all;
+    }
+    .copy-pill {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--blue);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+    .copy-pill:hover { background: rgba(56, 189, 248, 0.3); }
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-badge">
+        <div class="dot" id="statusDot"></div>
+        <span id="statusText">Strata AI Online</span>
+      </div>
+      <h1>Home AI &amp; Remote Access</h1>
+      <p class="sub">Constant Gateway · NVIDIA RTX 3060 12GB</p>
+    </div>
+
+    <!-- Auto-redirect card -->
+    <div class="redirect-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:14px; font-weight:600;">🚀 Connecting to Strata AI Chat...</span>
+        <span id="countdown" style="font-size:13px; color:var(--accent); font-weight:700;">1s</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <a id="directBtn" href="#" class="btn btn-primary">Open Strata Chat Now ➔</a>
+      <button id="cancelBtn" class="btn btn-secondary">Stay on this Gateway</button>
+    </div>
+
+    <!-- Remote Desktop & RDP details -->
+    <div class="card">
+      <div class="card-title">🖥️ Remote Desktop (When Traveling / School)</div>
+      <div class="row">
+        <span>RustDesk ID:</span>
+        <div><span class="val" id="rustdeskId">227 679 02</span><button class="copy-pill" onclick="copy('227 679 02')">Copy</button></div>
+      </div>
+      <div class="row">
+        <span>Public RDP Host:</span>
+        <div><span class="val" id="rdpHost">bore.pub:33890</span><button class="copy-pill" onclick="copy('bore.pub:33890')">Copy</button></div>
+      </div>
+      <div class="row">
+        <span>RDP Credentials:</span>
+        <span style="font-size:13px; color:var(--muted);">User: <b style="color:var(--text);">lukas</b> · Pass: <b style="color:var(--text);">strata123</b></span>
+      </div>
+    </div>
+
+    <!-- Local Wi-Fi Info -->
+    <div class="card">
+      <div class="card-title">📱 Local Home Network (Same Wi-Fi)</div>
+      <div class="row">
+        <span>Strata Web:</span>
+        <div><a href="http://192.168.2.1:8080" target="_blank" class="val" style="color:var(--accent); text-decoration:none;">http://192.168.2.1:8080</a></div>
+      </div>
+      <div class="row">
+        <span>Local RDP:</span>
+        <span class="val">192.168.2.1:3389</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      Auto-synchronized with Home PC · <span id="lastUpdated">Checking...</span>
+    </div>
+  </div>
+
+  <script>
+    let autoRedirect = true;
+    let targetUrl = "";
+
+    function copy(text) {
+      navigator.clipboard.writeText(text);
+      alert("Copied: " + text);
+    }
+
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      autoRedirect = false;
+      document.getElementById("cancelBtn").innerText = "Auto-redirect cancelled";
+      document.getElementById("progressBar").style.background = "#64748b";
+    });
+
+    async function loadStatus() {
+      try {
+        const res = await fetch("status.json?t=" + Date.now());
+        const data = await res.json();
+        targetUrl = data.url;
+        document.getElementById("directBtn").href = targetUrl;
+        if (data.rustdesk_id) document.getElementById("rustdeskId").innerText = data.rustdesk_id;
+        if (data.rdp_public) document.getElementById("rdpHost").innerText = data.rdp_public;
+        if (data.updated_at) document.getElementById("lastUpdated").innerText = "Updated: " + new Date(data.updated_at).toLocaleTimeString();
+
+        // Start progress bar and redirect
+        const bar = document.getElementById("progressBar");
+        bar.style.width = "100%";
+        setTimeout(() => {
+          if (autoRedirect && targetUrl && targetUrl.startsWith("http")) {
+            window.location.replace(targetUrl);
+          }
+        }, 1500);
+
+      } catch (err) {
+        document.getElementById("statusText").innerText = "Checking Home PC...";
+        document.getElementById("statusDot").style.background = "#f59e0b";
+        setTimeout(loadStatus, 3000);
+      }
+    }
+
+    loadStatus();
+  </script>
+</body>
+</html>
