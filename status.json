@@ -1,8 +1,8 @@
 {
-  "online": false,
-  "url": "",
+  "online": true,
+  "url": "https://api.trycloudflare.com",
   "lan_url": "http://192.168.2.1:8080",
   "rdp_public": "bore.pub:33890",
   "rustdesk_id": "227 679 02",
-  "updated_at": "2026-11-20T13:09:58Z"
+  "updated_at": "2026-11-20T13:10:33Z"
 }
