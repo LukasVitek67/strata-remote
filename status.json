@@ -1,8 +1,8 @@
 {
-  "online": true,
-  "url": "https://webcast-beginner-doll-reservations.trycloudflare.com",
+  "online": false,
+  "url": "",
   "lan_url": "http://192.168.2.1:8080",
   "rdp_public": "bore.pub:33890",
   "rustdesk_id": "227 679 02",
-  "updated_at": "2026-11-20T13:10:42Z"
+  "updated_at": "2026-11-20T13:12:01Z"
 }
